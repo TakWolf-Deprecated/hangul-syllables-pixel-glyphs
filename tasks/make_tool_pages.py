@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 def main():
-    fs_util.delete_dir(path_define.build_glyphs_dir)
+    fs_util.delete_dir(path_define.build_html_dir)
 
 
 if __name__ == '__main__':
