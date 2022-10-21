@@ -11,6 +11,7 @@ def main():
     fs_util.delete_dir(path_define.build_html_dir)
 
     html_service.make_tool_1_html_file()
+    html_service.make_tool_2_html_file()
 
 
 if __name__ == '__main__':
