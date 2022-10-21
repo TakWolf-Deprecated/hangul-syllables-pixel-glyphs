@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>AC00-D7AF; Hangul Syllables</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .matrix {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .matrix .line {
+            display: flex;
+        }
+        .matrix .line .char {
+            width: 40px;
+            height: 40px;
+            margin: 1px;
+            text-align: center;
+            font-size: 32px;
+            line-height: 40px;
+            background-color: rgba(245, 224, 200, 0.5);
+        }
+    </style>
+</head>
+<body>
+<div class="matrix">
+    {% for line in matrix %}
+        <div class="line">
+            {% for c in line %}
+                <div class="char">{{ c }}</div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+</body>
+</html>
