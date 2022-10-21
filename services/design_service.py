@@ -118,3 +118,7 @@ class DesignContext:
         self.initial_consonant_cellar = _create_initial_consonant_cellar(px)
         self.vowel_cellar = _create_vowel_cellar(px)
         self.final_consonant_cellar = _create_final_consonant_cellar(px)
+
+    def compose_glyph(self, initial_consonant_index, vowel_index, final_consonant_index):
+        glyph_data = [[0] * self.px] * self.px
+        return glyph_data
