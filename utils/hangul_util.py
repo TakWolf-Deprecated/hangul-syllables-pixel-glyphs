@@ -29,10 +29,11 @@ def get_syllable_code_point(initial_consonant_index, vowel_index, final_consonan
     return code_point
 
 
-def get_vowel_placement_mode(vowel):
+def get_vowel_placement_mode(vowel_index):
     """
     获取韵母在音节中的放置模式
     """
+    vowel = vowels[vowel_index]
     if vowel in ['ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅣ']:
         return 'vertical'
     elif vowel in ['ㅗ', 'ㅛ', 'ㅜ', 'ㅟ', 'ㅠ', 'ㅡ']:
