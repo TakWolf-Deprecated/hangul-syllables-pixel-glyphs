@@ -17,9 +17,21 @@ unicode_block_start = 0xAC00
 unicode_block_end = 0xD7AF
 
 
+def get_syllable_code_point(initial_consonant_index, vowel_index, final_consonant_index=None):
+    """
+    根据声母、韵母、韵尾的索引位置获取音节的码位
+    """
+    code_point = unicode_block_start
+    code_point += initial_consonant_index * len(vowels) * (len(final_consonants) + 1)
+    code_point += vowel_index * (len(final_consonants) + 1)
+    if final_consonant_index is not None:
+        code_point += final_consonant_index + 1
+    return code_point
+
+
 def get_vowel_placement_mode(vowel):
     """
-    获取元音在音节中的放置模式
+    获取韵母在音节中的放置模式
     """
     if vowel in ['ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅣ']:
         return 'vertical'
