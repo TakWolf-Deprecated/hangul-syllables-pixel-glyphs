@@ -2,7 +2,7 @@ import logging
 import os
 
 from configs import path_define
-from utils import glyph_util
+from utils import glyph_util, hangul_util
 
 logger = logging.getLogger('design-service')
 
@@ -44,6 +44,8 @@ def _create_initial_consonant_cellar(px):
         cellar[height_mode] = {}
         for placement_mode in ['vertical', 'horizontal', 'wrapping']:
             cellar[height_mode][placement_mode] = {}
+            for index, _ in enumerate(hangul_util.initial_consonants):
+                cellar[height_mode][placement_mode][index] = []
             scan_dir = os.path.join(letter_dir, height_mode, placement_mode)
             for glyph_file_dir, _, glyph_file_names in os.walk(scan_dir):
                 for glyph_file_name in glyph_file_names:
@@ -53,8 +55,6 @@ def _create_initial_consonant_cellar(px):
                     index, priority = _parse_glyph_file_name(glyph_file_name)
                     glyph_data, width, height = glyph_util.load_glyph_data_from_png(glyph_file_path)
                     # TODO
-                    if index not in cellar[height_mode][placement_mode]:
-                        cellar[height_mode][placement_mode][index] = []
                     cellar[height_mode][placement_mode][index].append((glyph_data, priority))
             for array in cellar[height_mode][placement_mode].values():
                 array.sort(key=lambda item : item[1])
@@ -71,6 +71,8 @@ def _create_vowel_cellar(px):
     letter_dir = os.path.join(path_define.fragments_dir, str(px), 'vowels')
     for height_mode in ['fullheight', 'halfheight']:
         cellar[height_mode] = {}
+        for index, _ in enumerate(hangul_util.vowels):
+            cellar[height_mode][index] = []
         scan_dir = os.path.join(letter_dir, height_mode)
         for glyph_file_dir, _, glyph_file_names in os.walk(scan_dir):
             for glyph_file_name in glyph_file_names:
@@ -80,8 +82,6 @@ def _create_vowel_cellar(px):
                 index, priority = _parse_glyph_file_name(glyph_file_name)
                 glyph_data, width, height = glyph_util.load_glyph_data_from_png(glyph_file_path)
                 # TODO
-                if index not in cellar[height_mode]:
-                    cellar[height_mode][index] = []
                 cellar[height_mode][index].append((glyph_data, priority))
         for array in cellar[height_mode].values():
             array.sort(key=lambda item : item[1])
@@ -95,6 +95,8 @@ def _create_final_consonant_cellar(px):
     结构：glyph_data、优先级、顶部空白高度
     """
     cellar = {}
+    for index, _ in enumerate(hangul_util.final_consonants):
+        cellar[index] = []
     scan_dir = os.path.join(path_define.fragments_dir, str(px), 'final-consonants')
     for glyph_file_dir, _, glyph_file_names in os.walk(scan_dir):
         for glyph_file_name in glyph_file_names:
@@ -104,8 +106,6 @@ def _create_final_consonant_cellar(px):
             index, priority = _parse_glyph_file_name(glyph_file_name)
             glyph_data, width, height = glyph_util.load_glyph_data_from_png(glyph_file_path)
             # TODO
-            if index not in cellar:
-                cellar[index] = []
             cellar[index].append((glyph_data, priority))
     for array in cellar.values():
         array.sort(key=lambda item : item[1])
@@ -120,5 +120,21 @@ class DesignContext:
         self.final_consonant_cellar = _create_final_consonant_cellar(px)
 
     def compose_glyph(self, initial_consonant_index, vowel_index, final_consonant_index):
-        glyph_data = [[0] * self.px] * self.px
+        height_mode = 'fullheight' if final_consonant_index is None else 'halfheight'
+        vowel_placement_mode = hangul_util.get_vowel_placement_mode(vowel_index)
+
+        # TODO
+        initial_consonant_infos = self.initial_consonant_cellar[height_mode][vowel_placement_mode][initial_consonant_index]
+        if len(initial_consonant_infos) > 0:
+            initial_consonant_glyph_data, _ = initial_consonant_infos[0]
+        else:
+            initial_consonant_glyph_data, _ = glyph_data = [[0] * self.px] * self.px, 0
+        # TODO
+        vowel_infos = self.vowel_cellar[height_mode][vowel_index]
+        if len(vowel_infos) > 0:
+            vowel_glyph_data, _ = vowel_infos[0]
+        else:
+            vowel_glyph_data, _ = glyph_data = [[0] * self.px] * self.px, 0
+        # TODO
+        glyph_data = glyph_util.merge_glyph_data(self.px, self.px, initial_consonant_glyph_data, vowel_glyph_data)
         return glyph_data

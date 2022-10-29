@@ -43,3 +43,14 @@ def save_glyph_data_to_png(glyph_data, file_path):
         bitmap.append(bitmap_row)
     image = png.from_array(bitmap, 'RGBA')
     image.save(file_path)
+
+
+def merge_glyph_data(width, height, *fragments):
+    glyph_data = [[0] * width for _ in range(height)]
+    for y, glyph_data_row in enumerate(glyph_data):
+        for x, pixel in enumerate(glyph_data_row):
+            for fragment in fragments:
+                if fragment[y][x] != 0:
+                    pixel = 1
+            glyph_data[y][x] = pixel
+    return glyph_data
