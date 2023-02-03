@@ -42,11 +42,11 @@ TODO
 
 ## 授权信息
 
-本项目包含「字形」和「程序」两个部分。
+分为「字形」和「程序」两个部分。
 
 ### 字形
 
-属于 [方舟像素字体](https://github.com/TakWolf/ark-pixel-font) 的一部分，遵循其 [字体许可证](https://github.com/TakWolf/ark-pixel-font#%E5%AD%97%E4%BD%93) 。
+属于 [方舟像素字体](https://github.com/TakWolf/ark-pixel-font) 的一部分，遵循其 [字体许可证](https://github.com/TakWolf/ark-pixel-font#授权信息) 。
 
 ### 程序
 
