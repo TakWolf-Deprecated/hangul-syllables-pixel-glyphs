@@ -38,22 +38,22 @@
 <body>
 <div class="matrix">
     {% for line in matrix %}
+    {% if loop.index0 == 0 %}
+    <div class="line">
+        {% for _ in line %}
         {% if loop.index0 == 0 %}
-            <div class="line">
-                {% for _ in line %}
-                    {% if loop.index0 == 0 %}
-                        <div class="box"></div>
-                    {% endif %}
-                    <div class="box number">{{ loop.index0 }}</div>
-                {% endfor %}
-            </div>
+        <div class="box"></div>
         {% endif %}
-        <div class="line">
-            <div class="box number">{{ loop.index0 }}</div>
-            {% for c in line %}
-                <div class="box char">{{ c }}</div>
-            {% endfor %}
-        </div>
+        <div class="box number">{{ loop.index0 }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="line">
+        <div class="box number">{{ loop.index0 }}</div>
+        {% for c in line %}
+        <div class="box char">{{ c }}</div>
+        {% endfor %}
+    </div>
     {% endfor %}
 </div>
 </body>
