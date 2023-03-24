@@ -1,8 +1,6 @@
 import logging
 import os
 
-import minify_html
-
 import configs
 from configs import path_define
 from utils import hangul_util, fs_util
@@ -13,7 +11,6 @@ logger = logging.getLogger('html-service')
 def _make_tool_html_file(matrix, name):
     template = configs.template_env.get_template('tool.html')
     html = template.render(matrix=matrix)
-    html = minify_html.minify(html, minify_css=True, minify_js=True)
     fs_util.make_dirs_if_not_exists(path_define.build_html_dir)
     html_file_path = os.path.join(path_define.build_html_dir, f'{name}.html')
     with open(html_file_path, 'w', encoding='utf-8') as file:
