@@ -51,3 +51,8 @@ TODO
 ### 程序
 
 使用 [MIT 许可证](LICENSE) 授权。
+
+## 程序依赖
+
+- [Jinja](https://github.com/pallets/jinja)
+- [PyPNG](https://gitlab.com/drj11/pypng)
