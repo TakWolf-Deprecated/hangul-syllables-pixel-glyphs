@@ -57,7 +57,7 @@ def _create_initial_consonant_cellar(px):
                     # TODO
                     cellar[height_mode][placement_mode][index].append((glyph_data, priority))
             for array in cellar[height_mode][placement_mode].values():
-                array.sort(key=lambda item : item[1])
+                array.sort(key=lambda item: item[1])
     return cellar
 
 
@@ -84,7 +84,7 @@ def _create_vowel_cellar(px):
                 # TODO
                 cellar[height_mode][index].append((glyph_data, priority))
         for array in cellar[height_mode].values():
-            array.sort(key=lambda item : item[1])
+            array.sort(key=lambda item: item[1])
     return cellar
 
 
@@ -108,7 +108,7 @@ def _create_final_consonant_cellar(px):
             # TODO
             cellar[index].append((glyph_data, priority))
     for array in cellar.values():
-        array.sort(key=lambda item : item[1])
+        array.sort(key=lambda item: item[1])
     return cellar
 
 
