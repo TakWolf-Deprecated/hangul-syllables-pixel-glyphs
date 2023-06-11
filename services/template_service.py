@@ -18,7 +18,7 @@ _environment = Environment(
 def _make_tool_html_file(matrix, name):
     template = _environment.get_template('tool.html')
     html = template.render(matrix=matrix)
-    fs_util.make_dirs_if_not_exists(path_define.build_html_dir)
+    fs_util.make_dirs(path_define.build_html_dir)
     html_file_path = os.path.join(path_define.build_html_dir, f'{name}.html')
     with open(html_file_path, 'w', encoding='utf-8') as file:
         file.write(html)

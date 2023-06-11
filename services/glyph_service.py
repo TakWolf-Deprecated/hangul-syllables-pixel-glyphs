@@ -17,7 +17,7 @@ def _make_syllable_glyph(design_context, initial_consonant_index, vowel_index, f
 
 def make_glyphs(design_context):
     outputs_dir = os.path.join(path_define.build_glyphs_dir, str(design_context.px))
-    fs_util.make_dirs_if_not_exists(outputs_dir)
+    fs_util.make_dirs(outputs_dir)
 
     for initial_consonant_index, _ in enumerate(hangul_util.initial_consonants):
         for vowel_index, _ in enumerate(hangul_util.vowels):
