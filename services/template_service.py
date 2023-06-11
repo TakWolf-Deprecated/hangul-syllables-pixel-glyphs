@@ -1,15 +1,22 @@
 import logging
 import os
 
-import configs
+from jinja2 import Environment, FileSystemLoader
+
 from configs import path_define
 from utils import hangul_util, fs_util
 
-logger = logging.getLogger('html-service')
+logger = logging.getLogger('template-service')
+
+_environment = Environment(
+    trim_blocks=True,
+    lstrip_blocks=True,
+    loader=FileSystemLoader(path_define.templates_dir),
+)
 
 
 def _make_tool_html_file(matrix, name):
-    template = configs.template_env.get_template('tool.html')
+    template = _environment.get_template('tool.html')
     html = template.render(matrix=matrix)
     fs_util.make_dirs_if_not_exists(path_define.build_html_dir)
     html_file_path = os.path.join(path_define.build_html_dir, f'{name}.html')
