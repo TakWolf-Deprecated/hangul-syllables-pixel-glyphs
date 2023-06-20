@@ -40,11 +40,13 @@ def format_jamo_files(font_size: int):
         jamo_file_from_dir = os.path.join(root_dir, jamo_dir_name)
         jamo_file_to_dir = os.path.join(tmp_dir, jamo_dir_name)
         fs_util.make_dirs(jamo_file_to_dir)
-        for jamo_file_from_name in os.listdir(jamo_file_from_dir):
-            jamo_file_from_path = os.path.join(jamo_file_from_dir, jamo_file_from_name)
+        for jamo_file_name in os.listdir(jamo_file_from_dir):
+            if not jamo_file_name.endswith('.png'):
+                continue
+            jamo_file_from_path = os.path.join(jamo_file_from_dir, jamo_file_name)
             width, height, bitmap, _ = png.Reader(filename=jamo_file_from_path).read()
-            jamo_file_to_name = f'{jamo} {width}*{height}.png'
-            jamo_file_to_path = os.path.join(jamo_file_to_dir, jamo_file_to_name)
+            jamo_file_name = f'{jamo} {width}*{height}.png'
+            jamo_file_to_path = os.path.join(jamo_file_to_dir, jamo_file_name)
             png.from_array(bitmap, 'RGBA').save(jamo_file_to_path)
             logger.info(f"Format jamo file: '{jamo_file_to_path}'")
     fs_util.delete_dir(root_dir)
