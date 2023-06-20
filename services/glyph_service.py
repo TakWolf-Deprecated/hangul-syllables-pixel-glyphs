@@ -37,17 +37,19 @@ def format_jamo_files(font_size: int):
     tmp_dir = os.path.join(path_define.jamos_tmp_dir, str(font_size))
     fs_util.delete_dir(tmp_dir)
     for jamo, jamo_type, height_mode, placement_mode, jamo_dir_name in _walk_jamo_dirs():
-        jamo_file_from_dir = os.path.join(root_dir, jamo_dir_name)
         jamo_file_to_dir = os.path.join(tmp_dir, jamo_dir_name)
         fs_util.make_dirs(jamo_file_to_dir)
+        jamo_file_from_dir = os.path.join(root_dir, jamo_dir_name)
+        if not os.path.isdir(jamo_file_from_dir):
+            continue
         for jamo_file_name in os.listdir(jamo_file_from_dir):
             if not jamo_file_name.endswith('.png'):
                 continue
             jamo_file_from_path = os.path.join(jamo_file_from_dir, jamo_file_name)
-            width, height, bitmap, _ = png.Reader(filename=jamo_file_from_path).read()
+            width, height, bitmap, info = png.Reader(filename=jamo_file_from_path).read()
             jamo_file_name = f'{jamo} {width}*{height}.png'
             jamo_file_to_path = os.path.join(jamo_file_to_dir, jamo_file_name)
-            png.from_array(bitmap, 'RGBA').save(jamo_file_to_path)
+            png.from_array(bitmap, 'RGBA', info).save(jamo_file_to_path)
             logger.info(f"Format jamo file: '{jamo_file_to_path}'")
     fs_util.delete_dir(root_dir)
     os.rename(tmp_dir, root_dir)
