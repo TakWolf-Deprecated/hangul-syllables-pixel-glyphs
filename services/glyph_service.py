@@ -50,7 +50,7 @@ def format_jamo_files(font_size: int):
             jamo_file_name = f'{jamo} {width}*{height}.png'
             jamo_file_to_path = os.path.join(jamo_file_to_dir, jamo_file_name)
             png.from_array(bitmap, 'RGBA', info).save(jamo_file_to_path)
-            logger.info(f"Format jamo file: '{jamo_file_to_path}'")
+            logger.info("Format jamo file: '%s'", jamo_file_to_path)
     fs_util.delete_dir(root_dir)
     os.rename(tmp_dir, root_dir)
 
